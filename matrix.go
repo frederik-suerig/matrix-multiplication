@@ -3,10 +3,7 @@ package main
 import "errors"
 
 func MatrixMultiplication(matrix1, matrix2 [][]int) ([][]int, error) {
-	rows := len(matrix1)
-	cols := len(matrix2[0])
-
-	if rows != cols {
+	if checkMatrixSize(matrix1, matrix2) {
 		return nil, errors.New("invalid input, those matrixes can't be multiplied")
 	}
 
@@ -27,4 +24,11 @@ func MatrixMultiplication(matrix1, matrix2 [][]int) ([][]int, error) {
 	}
 
 	return result, nil
+}
+
+func checkMatrixSize(m1, m2 [][]int) bool {
+	rows := len(m1)
+	cols := len(m2[0])
+
+	return rows != cols
 }
