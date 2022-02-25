@@ -11,8 +11,12 @@ func TestMatrixMultiplication(t *testing.T) {
 
 		matrix2 := [][]int{{2}, {4}, {1}}
 
-		got := MatrixMultiplication(matrix1, matrix2)
+		got, err := MatrixMultiplication(matrix1, matrix2)
 		want := [][]int{{14}}
+
+		if err != nil {
+			t.Errorf("Received an error %q when it shouldn't", err)
+		}
 
 		if !reflect.DeepEqual(got, want) {
 			t.Errorf("Expected %v, got %v", want, got)
@@ -23,11 +27,26 @@ func TestMatrixMultiplication(t *testing.T) {
 		m1 := [][]int{{3, 2, 1}, {1, 0, 2}}
 		m2 := [][]int{{1, 2}, {0, 1}, {4, 0}}
 
-		got := MatrixMultiplication(m1, m2)
+		got, err := MatrixMultiplication(m1, m2)
 		want := [][]int{{7, 8}, {9, 2}}
+
+		if err != nil {
+			t.Errorf("Received an error %q when it shouldn't", err)
+		}
 
 		if !reflect.DeepEqual(got, want) {
 			t.Errorf("Expected %v, got %v", want, got)
+		}
+	})
+
+	t.Run("expect error when matrices rows and columns don't match", func(t *testing.T) {
+		m1 := [][]int{{3, 2, 1}, {1, 0, 2}}
+		m2 := [][]int{{3}, {1}}
+
+		_, err := MatrixMultiplication(m1, m2)
+
+		if err == nil {
+			t.Errorf("Expected error, but got %v", err)
 		}
 	})
 }
