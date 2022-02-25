@@ -50,3 +50,11 @@ func TestMatrixMultiplication(t *testing.T) {
 		}
 	})
 }
+
+func BenchmarkMatrixMultiplication(b *testing.B) {
+	m1 := [][]int{{3, 2, 1}, {1, 0, 2}}
+	m2 := [][]int{{1, 2}, {0, 1}, {4, 0}}
+	for i := 0; i < b.N; i++ {
+		MatrixMultiplication(m1, m2)
+	}
+}
