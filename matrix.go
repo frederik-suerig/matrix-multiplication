@@ -7,17 +7,15 @@ func MatrixMultiplication(matrix1, matrix2 [][]int) ([][]int, error) {
 		return nil, errors.New("invalid input, those matrixes can't be multiplied")
 	}
 
+	columns := len(matrix2[0])
+
 	result := [][]int{}
 
 	for i := 0; i < len(matrix1); i++ {
-		result = append(result, []int{})
+		result = append(result, make([]int, columns))
 		for j := 0; j < len(matrix2[0]); j++ {
 			for k := 0; k < len(matrix2); k++ {
-				if len(result[i]) <= j {
-					result[i] = append(result[i], matrix1[i][k]*matrix2[k][j])
-				} else {
-					result[i][j] += matrix1[i][k] * matrix2[k][j]
-				}
+				result[i][j] += matrix1[i][k] * matrix2[k][j]
 			}
 		}
 
