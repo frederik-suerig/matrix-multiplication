@@ -142,14 +142,6 @@ func TestMultiThreadMatrixMultiplication(t *testing.T) {
 	})
 }
 
-func BenchmarkMatrixMultiplication(b *testing.B) {
-	m1 := [][]int{{3, 2, 1}, {1, 0, 2}}
-	m2 := [][]int{{1, 2}, {0, 1}, {4, 0}}
-	for i := 0; i < b.N; i++ {
-		MatrixMultiplication(m1, m2)
-	}
-}
-
 func BenchmarkSqaureMatrixMultiplication(b *testing.B) {
 	m1 := [][]int{{5, 2, 6, 1}, {0, 6, 2, 0}, {3, 8, 1, 4}, {1, 8, 5, 6}}
 	m2 := [][]int{{7, 5, 8, 0}, {1, 8, 2, 6}, {9, 4, 3, 8}, {5, 3, 7, 9}}
