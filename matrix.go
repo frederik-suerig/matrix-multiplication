@@ -5,7 +5,9 @@ import (
 	"sync"
 )
 
-func MatrixMultiplication(matrix1, matrix2 [][]int) ([][]int, error) {
+type TwoDimensionalMatrix [][]int
+
+func MatrixMultiplication(matrix1, matrix2 TwoDimensionalMatrix) (TwoDimensionalMatrix, error) {
 	rows := len(matrix1)
 	columns := len(matrix2[0])
 
@@ -13,7 +15,7 @@ func MatrixMultiplication(matrix1, matrix2 [][]int) ([][]int, error) {
 		return nil, errors.New("invalid input, those matrixes can't be multiplied")
 	}
 
-	result := [][]int{}
+	result := TwoDimensionalMatrix{}
 
 	for i := 0; i < rows; i++ {
 		result = append(result, make([]int, columns))
@@ -28,7 +30,7 @@ func MatrixMultiplication(matrix1, matrix2 [][]int) ([][]int, error) {
 	return result, nil
 }
 
-func MultiThreadedMatrixMultiplication(matrix1, matrix2 [][]int) ([][]int, error) {
+func MultiThreadedMatrixMultiplication(matrix1, matrix2 TwoDimensionalMatrix) (TwoDimensionalMatrix, error) {
 	rows := len(matrix1)
 	columns := len(matrix2[0])
 
@@ -39,7 +41,7 @@ func MultiThreadedMatrixMultiplication(matrix1, matrix2 [][]int) ([][]int, error
 	var wg sync.WaitGroup
 	wg.Add(rows)
 
-	result := [][]int{}
+	result := TwoDimensionalMatrix{}
 
 	for i := 0; i < rows; i++ {
 		result = append(result, make([]int, columns))
