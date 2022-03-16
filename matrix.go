@@ -5,9 +5,11 @@ import (
 	"sync"
 )
 
-type TwoDimensionalMatrix [][]int
+type Number interface {
+	~int | ~int8 | ~int16 | ~int32 | ~int64 | ~float32 | ~float64
+}
 
-func MatrixMultiplication(matrix1, matrix2 TwoDimensionalMatrix) (TwoDimensionalMatrix, error) {
+func MatrixMultiplication[T Number](matrix1, matrix2 [][]T) ([][]T, error) {
 	rows := len(matrix1)
 	columns := len(matrix2[0])
 
@@ -15,10 +17,10 @@ func MatrixMultiplication(matrix1, matrix2 TwoDimensionalMatrix) (TwoDimensional
 		return nil, errors.New("invalid input, those matrixes can't be multiplied")
 	}
 
-	result := TwoDimensionalMatrix{}
+	result := [][]T{}
 
 	for i := 0; i < rows; i++ {
-		result = append(result, make([]int, columns))
+		result = append(result, make([]T, columns))
 		for j := 0; j < columns; j++ {
 			for k := 0; k < len(matrix2); k++ {
 				result[i][j] += matrix1[i][k] * matrix2[k][j]
@@ -30,7 +32,7 @@ func MatrixMultiplication(matrix1, matrix2 TwoDimensionalMatrix) (TwoDimensional
 	return result, nil
 }
 
-func MultiThreadedMatrixMultiplication(matrix1, matrix2 TwoDimensionalMatrix) (TwoDimensionalMatrix, error) {
+func MultiThreadedMatrixMultiplication[T Number](matrix1, matrix2 [][]T) ([][]T, error) {
 	rows := len(matrix1)
 	columns := len(matrix2[0])
 
@@ -41,10 +43,10 @@ func MultiThreadedMatrixMultiplication(matrix1, matrix2 TwoDimensionalMatrix) (T
 	var wg sync.WaitGroup
 	wg.Add(rows)
 
-	result := TwoDimensionalMatrix{}
+	result := [][]T{}
 
 	for i := 0; i < rows; i++ {
-		result = append(result, make([]int, columns))
+		result = append(result, make([]T, columns))
 		go func(i int) {
 			defer wg.Done()
 			for j := 0; j < columns; j++ {
